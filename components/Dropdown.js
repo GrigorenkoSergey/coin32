@@ -1,6 +1,7 @@
 import React, { useRef, useState } from 'react';
 import styled from 'styled-components';
 import { useOnClickOutside } from '../utils';
+import ArrowSvg from '../public/icons/arrow.svg';
 
 export default function Dropdown(x) {
   const { list = [], onSelect, selectedItem } = x;
@@ -22,11 +23,9 @@ export default function Dropdown(x) {
           { selectedItem ? selectedItem.text : x.placeholder }
         </Value>
 
-        <Arrow isExpanded={isExpanded}
-               src="/icons/arrow.svg"
-               width={20}
-               height={20}
-               alt="arrow" />
+        <Arrow isExpanded={isExpanded}>
+          <ArrowSvg width={16} />
+        </Arrow>
       </Header>
 
       { isExpanded && (
@@ -59,7 +58,7 @@ display: flex;
 align-items: center;
 justify-content: space-between;
 border: 1px solid black;
-padding: 5px;
+padding: 5px 5px 5px 2.5px;
 font-size: ${fontSize};
 border-radius: ${borderRadius};
 cursor: pointer;
@@ -77,7 +76,7 @@ overflow: hidden;
 text-overflow: ellipsis;
 `;
 
-const Arrow = styled.img`
+const Arrow = styled.div`
 cursor: pointer;
 transition: ${transitionDuration};
 
@@ -98,7 +97,6 @@ font-size: ${fontSize};
 background-color: #fff;
 position: absolute;
 width: 100%;
-box-sizing: border-box;
 `;
 
 const ListItem = styled.li`
@@ -107,7 +105,7 @@ user-select: none;
 overflow: hidden;
 white-space: nowrap;
 text-overflow: ellipsis;
-padding: 5px;
+padding: 0 2.5px;
 
 &:hover {
   background-color: #00000010;

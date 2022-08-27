@@ -101,6 +101,11 @@ font-size: ${fontSize};
 position: absolute;
 background-color: ${p => p.theme.bgColor};
 width: 100%;
+max-height: 500px;
+
+&::-webkit-scrollbar {
+  width: 5px;
+}
 `;
 
 const ListItem = styled.li`
@@ -112,6 +117,6 @@ text-overflow: ellipsis;
 padding: 0 2.5px;
 
 &:hover {
-  background-color: #00000010;
+  background-color: #FFFFFF50;
 }
 `;

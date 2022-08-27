@@ -3,12 +3,6 @@ import styled from 'styled-components';
 import Dropdown from './Dropdown';
 import Search from './Search';
 
-const mockPlatforms = [
-  { id: '0', text: 'all' },
-  { id: '1', text: 'platform-1' },
-  { id: '2', text: 'platform-2' },
-  { id: '3', text: 'platform-3' },
-];
 const orderList = [
   { id: 'rating', text: 'Rating: best first' },
   { id: '-rating', text: 'Rating: worst first' },
@@ -16,18 +10,19 @@ const orderList = [
   { id: '-release', text: 'Release: old first' },
 ];
 
-export default function SortingBar() {
+export default function SortingBar({ platforms: platformsOrigin }) {
+  const platforms = [{ id: '0', text: 'all' }, ...platformsOrigin];
   const [order, setOrder] = useState(orderList[0]);
-  const [platform, setPlatform] = useState(mockPlatforms[0]);
+  const [platform, setPlatform] = useState(platforms[0]);
 
   return (
     <Container>
       <GameSpan>Game:</GameSpan>
       <SearchStyled />
       <span>Platform:</span>
-      <Dropdown list={mockPlatforms} zIndex={10} selectedItem={platform} onSelect={setPlatform} />
+      <Dropdown list={platforms} zIndex={10} selectedItem={platform} onSelect={setPlatform} />
       <OrderSpan>Order&nbsp;by:</OrderSpan>
-      <Dropdown list={orderList} zIndex={10} selectedItem={order} onSelect={setOrder} />
+      <Dropdown list={orderList} zIndex={5} selectedItem={order} onSelect={setOrder} />
     </Container>
   );
 }

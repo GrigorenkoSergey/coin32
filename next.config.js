@@ -21,7 +21,7 @@ const nextConfig = {
     return config;
   },
 
-  images: { domains: ['m.media-amazon.com'] } // FIMXE
+  images: { domains: ['media.rawg.io'] }
 };
 
 module.exports = nextConfig;

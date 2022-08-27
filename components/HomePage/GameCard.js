@@ -1,17 +1,17 @@
 import styled from 'styled-components';
 import Image from 'next/image';
 
-export default function GameCard({ name, poster, rating, release, }) {
+export default function GameCard({ name, poster, rating, released, }) {
   return (
     <Container>
       <ImageWrapper>
-        <Image src={poster} alt="poster" layout="fill" priority={true} />
+        <Image src={poster} alt="poster" layout="fill" placeholder="blur" blurDataURL={poster} />
       </ImageWrapper>
       <GameName>{ name }</GameName>
       <RowTitle>Rating:</RowTitle>
       <RowValue>{ rating }</RowValue>
       <RowTitle>Released:</RowTitle>
-      <RowValue>{ release }</RowValue>
+      <RowValue>{ released }</RowValue>
     </Container>
   );
 }

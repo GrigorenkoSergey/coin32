@@ -60,7 +60,10 @@ const Input = styled.input`
   &:hover, 
   &:focus {
     background-color: #FFF;
-    box-shadow: 0 0 10px 3px white;
     color: black;
+  }
+
+  &:focus {
+    box-shadow: 0 0 10px 3px white;
   }
 `;

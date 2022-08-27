@@ -41,6 +41,20 @@ a {
     background: black;
   }
 }
+
+*::-webkit-scrollbar {
+  width: 12px;
+}
+
+*::-webkit-scrollbar-track {
+  background-color: #FFFFFF;
+  border-radius: 100px;
+}
+
+*::-webkit-scrollbar-thumb {
+  background-color: gray;
+  border-radius: 100px;
+}
 `;
 
 export default function MyApp({ Component, pageProps }) {

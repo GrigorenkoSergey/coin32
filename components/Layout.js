@@ -21,6 +21,9 @@ margin: 0 auto;
 padding: 5px;
 max-width: 380px;
 
+background-color: ${p => p.theme.bgColor};
+color: ${p => p.theme.fontColor};
+
 @media ${p => p.theme.media.tablet} {
   max-width: 100%;
 }

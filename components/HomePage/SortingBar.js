@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import styled from 'styled-components';
 import Dropdown from './Dropdown';
+import Search from './Search';
 
 const mockPlatforms = [
   { id: '0', text: 'all' },
@@ -22,7 +23,7 @@ export default function SortingBar() {
   return (
     <Container>
       <GameSpan>Game:</GameSpan>
-      <Search type="text" alt="search" placeholder="search by name" />
+      <SearchStyled />
       <span>Platform:</span>
       <Dropdown list={mockPlatforms} zIndex={10} selectedItem={platform} onSelect={setPlatform} />
       <OrderSpan>Order&nbsp;by:</OrderSpan>
@@ -36,8 +37,8 @@ display: grid;
 grid-template-columns: auto 1fr;
 align-items: center;
 gap: 5px 10px;
-padding: 5px;
-border: 1px solid black;
+padding: 10px 5px;
+border: 1px solid;
 border-radius: 8px;
 
 @media (min-width: 500px) {
@@ -58,24 +59,7 @@ span {
 }
 `;
 
-const GameSpan = styled.span`
-@media ${p => p.theme.media.laptop} {
-  grid-column: 5;
-  padding-left: 10px;
-}
-`;
-
-const Search = styled.input`
-  border-radius: 10000px;
-  border: 1px solid black;
-  outline: none;
-  padding: 5px 35px 5px 10px;
-  font-size: 14px;
-  background-image: url('/icons/search.svg');
-  background-repeat: no-repeat;
-  background-position: center right 10px;
-  background-size: 20px;
-
+const SearchStyled = styled(Search)`
   @media ${p => p.theme.media.tablet} {
     grid-column: 2 / -1;
   }
@@ -87,6 +71,13 @@ const Search = styled.input`
   &:focus {
     box-shadow: 0 0 5px gray;
   }
+`;
+
+const GameSpan = styled.span`
+@media ${p => p.theme.media.laptop} {
+  grid-column: 5;
+  padding-left: 10px;
+}
 `;
 
 const OrderSpan = styled.span`

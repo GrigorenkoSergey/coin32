@@ -1,12 +1,14 @@
 import styled from 'styled-components';
 import Link from 'next/link';
-import Image from 'next/image';
+import HomeSvg from '@/icons/home.svg';
 
 export default function Header({ title }) {
   return (
     <Container>
       <Link href="/">
-        <HomeLink><Image src="/icons/home.svg" alt="home" width={30} height={30} /></HomeLink>
+        <HomeLink>
+          <HomeSvg width={30} height={30} />
+        </HomeLink>
       </Link>
 
       <Title>{ title }</Title>

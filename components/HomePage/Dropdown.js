@@ -60,7 +60,7 @@ const Header = styled.section`
 display: flex;
 align-items: center;
 justify-content: space-between;
-border: 1px solid black;
+border: 1px solid;
 padding: 5px 5px 5px 7.5px;
 font-size: ${fontSize};
 border-radius: ${borderRadius};
@@ -92,13 +92,14 @@ const List = styled.ul`
 margin: 0;
 list-style-type: none;
 padding: 5px;
-border: 1px solid black;
+border: 1px solid;
+color: ${p => p.theme.fontColor};
 border-bottom-left-radius: ${borderRadius};
 border-bottom-right-radius: ${borderRadius};
 overflow-y: auto;
 font-size: ${fontSize};
-background-color: #fff;
 position: absolute;
+background-color: ${p => p.theme.bgColor};
 width: 100%;
 `;
 

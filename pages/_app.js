@@ -1,7 +1,11 @@
 import { createGlobalStyle, ThemeProvider } from 'styled-components';
 
 const theme = {
+  bgColor: '#151515',
+  fontColor: '#FFF',
+
   flexGaps,
+
   media: {
     tablet: '(min-width: 481px)',
     laptop: '(min-width: 769px)',

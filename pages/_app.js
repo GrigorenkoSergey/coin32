@@ -1,13 +1,14 @@
-import { createGlobalStyle } from 'styled-components';
+import { createGlobalStyle, ThemeProvider } from 'styled-components';
 
-export default function MyApp({ Component, pageProps }) {
-  return (
-    <>
-      <Global />
-      <Component {...pageProps} />
-    </>
-  );
-}
+const theme = {
+  flexGaps,
+  media: {
+    tablet: '(min-width: 481px)',
+    laptop: '(min-width: 769px)',
+    desktop: '(min-width: 1025px)',
+    TV: '(min-width: 1201px)',
+  }
+};
 
 const Global = createGlobalStyle`
 html,
@@ -37,3 +38,23 @@ a {
   }
 }
 `;
+
+export default function MyApp({ Component, pageProps }) {
+  return (
+    <ThemeProvider theme={theme}>
+      <Global />
+      <Component {...pageProps} />
+    </ThemeProvider>
+  );
+}
+
+// use only in flex-containers
+// vgap, hgap in pixels
+function flexGaps({ vgap = 0, hgap = 0 } = {}) {
+  return (
+    `& > *:not(:first-child) {
+      margin-top: ${vgap}px;
+      margin-left: ${hgap}px;
+    }`
+  );
+}

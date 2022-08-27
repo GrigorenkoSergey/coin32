@@ -58,7 +58,9 @@
     "operator-linebreak": [ "error", "before" ],
     "space-infix-ops": [ "error", { "int32Hint": false } ],
     "space-in-parens": "error",
+    "semi": "error",
     "yoda": "error",
+    "quotes": [2, "single", "avoid-escape"],
 
     "no-else-return": "warn",
     "no-eq-null": "error",

@@ -3,9 +3,7 @@ import styled from 'styled-components';
 import { useOnClickOutside } from '../utils';
 import ArrowSvg from '../public/icons/arrow.svg';
 
-export default function Dropdown(x) {
-  const { list = [], onSelect, selectedItem } = x;
-
+export default function Dropdown({ list = [], onSelect, selectedItem, placeholder = '', zIndex }) {
   const ref = useRef(null);
   const [isExpanded, setIsExpanded] = useState(false);
   useOnClickOutside(ref, () => setIsExpanded(false));
@@ -16,11 +14,11 @@ export default function Dropdown(x) {
   };
 
   return (
-    <Container ref={ref}>
+    <Container ref={ref} zIndex={zIndex}>
       <Header isExpanded={isExpanded}
               onClick={() => setIsExpanded(!isExpanded)}>
         <Value isExpanded={isExpanded}>
-          { selectedItem ? selectedItem.text : x.placeholder }
+          { selectedItem ? selectedItem.text : placeholder }
         </Value>
 
         <Arrow isExpanded={isExpanded}>
@@ -48,17 +46,22 @@ const transitionDuration = '0.3s';
 const borderRadius = '6px';
 
 /* https://stackoverflow.com/questions/38223879/white-space-nowrap-breaks-flexbox-layout */
-const Container = styled.div`
+const Container = styled.section`
 min-width: 0;
 position: relative;
+width: 100%;
+
+${({ zIndex }) => zIndex && `
+z-index: ${zIndex};
+`}
 `;
 
-const Header = styled.div`
+const Header = styled.section`
 display: flex;
 align-items: center;
 justify-content: space-between;
 border: 1px solid black;
-padding: 5px 5px 5px 2.5px;
+padding: 5px 5px 5px 7.5px;
 font-size: ${fontSize};
 border-radius: ${borderRadius};
 cursor: pointer;
@@ -71,12 +74,12 @@ ${x => x.isExpanded && `
 `}
 `;
 
-const Value = styled.div`
+const Value = styled.section`
 overflow: hidden;
 text-overflow: ellipsis;
 `;
 
-const Arrow = styled.div`
+const Arrow = styled.section`
 cursor: pointer;
 transition: ${transitionDuration};
 

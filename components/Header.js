@@ -25,6 +25,7 @@ padding: 5px;
 `;
 
 const Title = styled.h1`
+margin: 10px 0;
 flex-grow: 1;
 text-align: center;
 `;

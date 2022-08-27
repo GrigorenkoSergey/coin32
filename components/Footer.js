@@ -1,10 +1,10 @@
 import styled from 'styled-components';
 
-export default function Footer(x) {
-  return <Content {...x}>Created by EvilEngeneer</Content>;
+export default function Footer() {
+  return <Container>Created by EvilEngeneer</Container>;
 }
 
-const Content = styled.footer`
+const Container = styled.footer`
 display: flex;
 justify-content: center;
 padding: 5px;

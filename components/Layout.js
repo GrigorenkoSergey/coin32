@@ -19,4 +19,9 @@ display: flex;
 flex-direction: column;
 margin: 0 auto;
 padding: 5px;
+max-width: 380px;
+
+@media ${p => p.theme.media.tablet} {
+  max-width: 100%;
+}
 `;

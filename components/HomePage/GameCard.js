@@ -5,7 +5,7 @@ export default function GameCard({ name, poster, rating, release, }) {
   return (
     <Container>
       <ImageWrapper>
-        <Image src={poster} alt="poster" layout="fill" />
+        <Image src={poster} alt="poster" layout="fill" priority={true} />
       </ImageWrapper>
       <GameName>{ name }</GameName>
       <RowTitle>Rating:</RowTitle>
@@ -17,7 +17,7 @@ export default function GameCard({ name, poster, rating, release, }) {
 }
 
 const Container = styled.div`
-padding: 5px;
+padding: 8px;
 border-radius: 5px;
 border: 1px solid;
 cursor: pointer;
@@ -48,10 +48,8 @@ margin: 8px 0;
 
 const RowTitle = styled.span`
 font-weight: bold;
-padding-left: 10px;
 `;
 
 const RowValue = styled.span`
 justify-self: end;
-padding-right: 10px;
 `;

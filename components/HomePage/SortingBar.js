@@ -25,8 +25,8 @@ export default function SortingBar() {
       <Search type="text" alt="search" placeholder="search by name" />
       <span>Platform:</span>
       <Dropdown list={mockPlatforms} zIndex={10} selectedItem={platform} onSelect={setPlatform} />
-      <OrderSpan>Order by:</OrderSpan>
-      <Dropdown list={orderList} selectedItem={order} onSelect={setOrder} />
+      <OrderSpan>Order&nbsp;by:</OrderSpan>
+      <Dropdown list={orderList} zIndex={10} selectedItem={order} onSelect={setOrder} />
     </Container>
   );
 }
@@ -40,7 +40,7 @@ padding: 5px;
 border: 1px solid black;
 border-radius: 8px;
 
-@media ${p => p.theme.media.tablet} {
+@media (min-width: 500px) {
   grid-template-columns: repeat(2, auto minmax(150px, 1fr));
 }
 
@@ -90,7 +90,7 @@ const Search = styled.input`
 `;
 
 const OrderSpan = styled.span`
-@media ${p => p.theme.media.tablet} {
+@media (min-width: 500px) {
   padding-left: 10px;
 }
 `;

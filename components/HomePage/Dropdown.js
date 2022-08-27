@@ -1,7 +1,7 @@
 import React, { useRef, useState } from 'react';
 import styled from 'styled-components';
-import { useOnClickOutside } from '../utils';
-import ArrowSvg from '../public/icons/arrow.svg';
+import { useOnClickOutside } from '../../utils';
+import ArrowSvg from '../../public/icons/arrow.svg';
 
 export default function Dropdown({ list = [], onSelect, selectedItem, placeholder = '', zIndex }) {
   const ref = useRef(null);

@@ -6,10 +6,12 @@ const nextConfig = {
   webpack(config) {
     config.module.rules.push({
       test: /\.svg$/,
-      use: ["@svgr/webpack"]
+      use: ['@svgr/webpack']
     });
     return config;
-  }
-}
+  },
 
-module.exports = nextConfig
+  images: { domains: ['m.media-amazon.com'] } // FIMXE
+};
+
+module.exports = nextConfig;

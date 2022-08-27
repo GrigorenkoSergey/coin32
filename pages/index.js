@@ -1,10 +1,4 @@
-import Layout from '../components/Layout';
-import SortingBar from '../components/SortingBar';
+import HomePage from '../components/HomePage';
 
-export default function Home() {
-  return (
-    <Layout title="Select your Game!">
-      <SortingBar />
-    </Layout>
-  );
-}
+const Home = HomePage;
+export default Home;

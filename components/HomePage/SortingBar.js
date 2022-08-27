@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import styled from 'styled-components';
-import Dropdown from '../components/Dropdown';
+import Dropdown from './Dropdown';
 
 const mockPlatforms = [
   { id: '0', text: 'all' },

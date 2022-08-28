@@ -115,6 +115,7 @@ overflow: hidden;
 white-space: nowrap;
 text-overflow: ellipsis;
 padding: 0 2.5px;
+padding-top: 8px;
 
 &:hover {
   background-color: #FFFFFF50;

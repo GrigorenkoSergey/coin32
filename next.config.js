@@ -10,14 +10,14 @@ const nextConfig = {
       use: ['@svgr/webpack']
     });
 
-      config.resolve.alias = {
-    ...config.resolve.alias,
+    config.resolve.alias = {
+      ...config.resolve.alias,
       '@/components': ['components'],
       '@/utils': ['utils'],
       '@/utils/*': ['utils/*'],
       '@/icons': ['public/icons'],
       '@/icons/*': ['public/icons/*'],
-  };
+    };
     return config;
   },
 

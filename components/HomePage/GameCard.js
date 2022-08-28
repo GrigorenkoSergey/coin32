@@ -1,11 +1,16 @@
 import styled from 'styled-components';
 import Image from 'next/image';
 
-export default function GameCard({ name, poster, rating, released, }) {
+const noImageSrc = '/no-image.jpg';
+export default function GameCard({ name, poster, rating, released }) {
   return (
     <Container>
       <ImageWrapper>
-        <Image src={poster} alt="poster" layout="fill" placeholder="blur" blurDataURL={poster} />
+        <Image src={poster || noImageSrc}
+               alt="poster"
+               layout="fill"
+               placeholder="blur"
+               blurDataURL={poster || noImageSrc} />
       </ImageWrapper>
       <GameName>{ name }</GameName>
       <RowTitle>Rating:</RowTitle>
@@ -36,7 +41,7 @@ border: 1px solid;
 border-radius: 5px;
 
 img {
-  object-fit: cover;
+  object-fit: scale-down;
 }
 `;
 

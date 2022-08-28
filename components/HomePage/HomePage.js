@@ -11,15 +11,28 @@ const apiSrc = process.env.NEXT_PUBLIC_API_URL;
 const key = process.env.NEXT_PUBLIC_API_KEY;
 const PAGE_SIZE = 24;
 
-const fetcher = async (page, pageSize) => {
-  const res = await fetch(`${apiSrc}/games?${new URLSearchParams({
-    page_size: pageSize,
+const orderList = [
+  { id: '-rating', text: 'Rating: best first' },
+  { id: 'rating', text: 'Rating: worst first' },
+  { id: '-released', text: 'Release: new first' },
+  { id: 'released', text: 'Release: old first' },
+];
+
+const fetcher = async ({ page, ordering, platform, search } = {}) => {
+  const searchStr = new URLSearchParams({
+    page_size: PAGE_SIZE,
     page: page,
     key,
-  })}`);
+    ordering,
+  });
+
+  if (platform) searchStr.append('platforms', platform);
+  if (search) searchStr.append('search', search);
+
+  const res = await fetch(`${apiSrc}/games?${searchStr}`);
   const data = await res.json();
 
-  const totalPages = Math.ceil(data.count / pageSize);
+  const totalPages = Math.ceil(data.count / PAGE_SIZE);
   const games = data.results.map(g => {
     const { id, name, background_image: poster, rating, released } = g;
     return { id, name, poster, rating, released };
@@ -28,20 +41,40 @@ const fetcher = async (page, pageSize) => {
   return { games, totalPages };
 };
 
-export default function HomePage({ platforms }) {
+export default function HomePage({ platforms: platformsOrigin }) {
+  const platforms = [{ id: 0, text: 'all' }, ...platformsOrigin];
+
   const [page, setPage] = useState(1);
-  const { data, error } = useSWR([page, PAGE_SIZE], fetcher);
+  const [platform, setPlatform] = useState(platforms[0]);
+  const [order, setOrder] = useState(orderList[0]);
+  const [search, setSearch] = useState('');
+
+  const { data, error } = useSWR({
+    page,
+    platform: platform.id,
+    ordering: order.id,
+    search
+  }, fetcher);
+
+  if (error) return <h2>Failed to load games...</h2>;
 
   const { games, totalPages } = data || {};
-  if (error) return <h2>Faile to load games...</h2>;
 
   return (
     <Layout title="Select your Game!">
-      <SortingBar platforms={platforms} />
+      <SortingBar platformList={platforms}
+                  platform={platform}
+                  order={order}
+                  orderList={orderList}
+                  onSearchEnter={setSearch}
+                  onSelectPlatform={setPlatform}
+                  onSelectOrder={setOrder} />
+
       <CardsWrapper>
         { !games && <h2>Loading...</h2> }
         { games && games.map(g => <GameCard key={g.id} {...g} />) }
       </CardsWrapper>
+
       <PaginationStyled onSelect={setPage} curr={page} total={totalPages} />
     </Layout>
   );

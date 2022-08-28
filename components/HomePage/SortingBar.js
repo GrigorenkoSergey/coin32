@@ -1,28 +1,24 @@
-import { useState } from 'react';
 import styled from 'styled-components';
 import Dropdown from './Dropdown';
 import Search from './Search';
 
-const orderList = [
-  { id: 'rating', text: 'Rating: best first' },
-  { id: '-rating', text: 'Rating: worst first' },
-  { id: 'release', text: 'Release: new first' },
-  { id: '-release', text: 'Release: old first' },
-];
-
-export default function SortingBar({ platforms: platformsOrigin }) {
-  const platforms = [{ id: '0', text: 'all' }, ...platformsOrigin];
-  const [order, setOrder] = useState(orderList[0]);
-  const [platform, setPlatform] = useState(platforms[0]);
-
+export default function SortingBar({
+  platformList,
+  platform,
+  onSelectPlatform,
+  orderList,
+  order,
+  onSelectOrder,
+  onSearchEnter
+}) {
   return (
     <Container>
       <GameSpan>Game:</GameSpan>
-      <SearchStyled />
+      <SearchStyled onEnter={onSearchEnter} />
       <span>Platform:</span>
-      <Dropdown list={platforms} zIndex={10} selectedItem={platform} onSelect={setPlatform} />
+      <Dropdown list={platformList} zIndex={10} selectedItem={platform} onSelect={onSelectPlatform} />
       <OrderSpan>Order&nbsp;by:</OrderSpan>
-      <Dropdown list={orderList} zIndex={5} selectedItem={order} onSelect={setOrder} />
+      <Dropdown list={orderList} zIndex={5} selectedItem={order} onSelect={onSelectOrder} />
     </Container>
   );
 }

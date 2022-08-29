@@ -7,6 +7,6 @@ export default function Footer() {
 const Container = styled.footer`
 display: flex;
 justify-content: center;
-padding: 5px;
+padding: 10px;
 margin-top: auto;
 `;

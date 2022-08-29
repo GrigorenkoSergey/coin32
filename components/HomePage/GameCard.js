@@ -1,17 +1,20 @@
 import styled from 'styled-components';
 import Image from 'next/image';
+import Link from 'next/link';
 
 const noImageSrc = '/no-image.jpg';
-export default function GameCard({ name, poster, rating, released }) {
+export default function GameCard({ name, poster, rating, released, slug }) {
   return (
     <Container>
-      <ImageWrapper>
-        <Image src={poster || noImageSrc}
-               alt="poster"
-               layout="fill"
-               placeholder="blur"
-               blurDataURL={poster || noImageSrc} />
-      </ImageWrapper>
+      <Link href={`/game/${slug}`}>
+        <ImageWrapper>
+          <Image src={poster || noImageSrc}
+                 alt="poster"
+                 layout="fill"
+                 placeholder="blur"
+                 blurDataURL={poster || noImageSrc} />
+        </ImageWrapper>
+      </Link>
       <GameName>{ name }</GameName>
       <RowTitle>Rating:</RowTitle>
       <RowValue>{ rating }</RowValue>
@@ -25,7 +28,6 @@ const Container = styled.div`
 padding: 8px;
 border-radius: 5px;
 border: 1px solid;
-cursor: pointer;
 
 display: grid;
 grid-template-columns: auto auto;
@@ -34,6 +36,7 @@ grid-row-gap: 4px;
 `;
 
 const ImageWrapper = styled.div`
+cursor: pointer;
 position: relative;
 min-height: 150px;
 grid-column: 1 / -1;

@@ -34,8 +34,8 @@ const fetcher = async ({ page, ordering, platform, search } = {}) => {
 
   const totalPages = Math.ceil(data.count / PAGE_SIZE);
   const games = data.results.map(g => {
-    const { id, name, background_image: poster, rating, released } = g;
-    return { id, name, poster, rating, released };
+    const { slug, name, background_image: poster, rating, released } = g;
+    return { slug, name, poster, rating, released };
   });
 
   return { games, totalPages };
@@ -72,7 +72,7 @@ export default function HomePage({ platforms: platformsOrigin }) {
 
       <CardsWrapper>
         { !games && <h2>Loading...</h2> }
-        { games && games.map(g => <GameCard key={g.id} {...g} />) }
+        { games && games.map(g => <GameCard key={g.slug} {...g} />) }
       </CardsWrapper>
 
       <PaginationStyled onSelect={setPage} curr={page} total={totalPages} />

@@ -12,7 +12,7 @@ export default function Search({ className, onEnter }) {
     };
 
     ref.current.addEventListener('keydown', handleKeyDown);
-    return () => ref.current.removeEventListener('keydown', handleKeyDown);
+    return () => ref.current && ref.current.removeEventListener('keydown', handleKeyDown);
   });
 
   return (

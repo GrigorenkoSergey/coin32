@@ -1,9 +1,14 @@
-import Layout from '@/components/Layout';
+import GameInfoPage from '@/components/GameInfoPage';
 
-export default function GameInfo() {
-  return (
-    <Layout title="Game Name">
-      <h2>Game Info</h2>
-    </Layout>
-  );
+const apiSrc = process.env.NEXT_PUBLIC_API_URL;
+const key = process.env.NEXT_PUBLIC_API_KEY;
+
+export async function getServerSideProps(context) {
+  const { slug } = context.query;
+  const res = await fetch(`${apiSrc}/games/${slug}?key=${key}`);
+  const data = await res.json();
+
+  return { props: { slug, info: data, }, };
 }
+
+export default GameInfoPage;

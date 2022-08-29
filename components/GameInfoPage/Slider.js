@@ -16,7 +16,7 @@ const fetcher = async ({ slug }) => {
   return data;
 };
 
-export default function Slider({ slug }) {
+export default function Slider({ className, slug }) {
   const { data, error } = useSWR({ slug }, fetcher);
   const [imageNum, setImageNum] = useState(0);
 
@@ -24,7 +24,7 @@ export default function Slider({ slug }) {
   const { count } = data || {};
 
   return (
-    <Container>
+    <Container className={className}>
       { !data && <h2>Loading...</h2> }
 
       { data && data.results.map((img, i) => (

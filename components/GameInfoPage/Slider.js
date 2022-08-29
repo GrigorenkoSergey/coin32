@@ -16,6 +16,8 @@ const fetcher = async ({ slug }) => {
   return data;
 };
 
+const fallbackImg = '/no-image.jpg';
+
 export default function Slider({ className, slug }) {
   const { data, error } = useSWR({ slug }, fetcher);
   const [imageNum, setImageNum] = useState(0);
@@ -38,11 +40,11 @@ export default function Slider({ className, slug }) {
                 </Arrow>
               ) }
 
-              <Image src={img.image}
+              <Image src={img.image || fallbackImg}
                      layout="fill"
                      alt="screenshot"
                      placeholder="blur"
-                     blurDataURL={img.image} />
+                     blurDataURL={img.image || fallbackImg} />
 
               { imageNum < count - 1 && (
                 <Arrow dir="right" onClick={() => setImageNum(imageNum + 1)}>
@@ -53,9 +55,7 @@ export default function Slider({ className, slug }) {
           )
       )) }
 
-      <Text>
-        { `${imageNum + 1} of ${count}` }
-      </Text>
+      { data && <Text> { `${imageNum + 1} of ${count}` }</Text> }
     </Container>
   );
 }

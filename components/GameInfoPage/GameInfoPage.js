@@ -8,38 +8,27 @@ export default function GameInfoPage({ slug, info, }) {
   return (
     <Layout title={name}>
       <MetaInfo>
-        <h3>Website</h3>
-        <a href={website || ''} rel="noopener noreferrer" target="_blank">
-          { website || 'No website' }
-        </a>
-      </MetaInfo>
+        <h3>Website:</h3>
+        { !website && <span>No website</span> }
+        { website && <a href={website} rel="noopener noreferrer" target="_blank"> { website }</a> }
 
-      <MetaInfo>
         <h3>Rating:</h3>
-        <span>{ rating }</span>
-      </MetaInfo>
+        <span>{ rating || 'No rating' }</span>
 
-      <MetaInfo>
         <h3>Released:</h3>
-        <span>{ released }</span>
-      </MetaInfo>
+        <span>{ released || 'No data' }</span>
 
-      <MetaInfo>
         <h3>Platforms:</h3>
-        <Platforms>{
-          platforms.map((p, i) => p.platform.name + (i < platforms.length - 1 ? ', ' : ''))
-        }</Platforms>
+        <Platforms>
+          { platforms.map((p, i) => p.platform.name + (i < platforms.length - 1 ? ', ' : '')) }
+        </Platforms>
       </MetaInfo>
 
-      <MetaInfo>
-        <h3>Description:</h3>
-      </MetaInfo>
+      <h3>Description:</h3>
 
       <Description dangerouslySetInnerHTML={{ __html: description }} />
 
-      <MetaInfo>
-        <h3>Game screenshots:</h3>
-      </MetaInfo>
+      <h3>Game screenshots:</h3>
 
       <StyledSlider slug={slug} />
     </Layout>
@@ -47,16 +36,23 @@ export default function GameInfoPage({ slug, info, }) {
 }
 
 const MetaInfo = styled.div`
-display: flex;
-justify-content: space-between;
-align-items: center;
+display: grid;
+grid-template-columns: auto 1fr;
+grid-gap: 10px 10px;
 margin: 6px 0;
+align-items: center;
 
-a {
-  max-width: 70%;
+@media ${p => p.theme.media.laptop} {
+  grid-template-columns: repeat(2, auto 1fr);
+  grid-column-gap: 10%;
+}
+
+& >:nth-child(2n) {
+  justify-self: end;
+  padding: 4px;
+  max-width: 100%;
   text-overflow: ellipsis;
   overflow: hidden;
-  padding: 4px;
 }
 
 a: hover {
@@ -69,12 +65,12 @@ h3 {
 `;
 
 const Platforms = styled.p`
-margin: 0 0 0 16px;
+margin: 0;
 text-align: end;
 `;
 
 const Description = styled.section`
-padding: 12px 0;
+margin: 0;
 
 & > :first-child {
   margin-top: 0;

@@ -2,8 +2,8 @@ import styled from 'styled-components';
 
 export default function Pagination({ className, curr, total, onSelect }) {
   let [leftPage, centerPage, rightPage] = [1, 2, 3];
-  if (curr > 1) [leftPage, centerPage, rightPage] = [curr - 1, curr, curr + 1];
-  if (curr === total) [leftPage, centerPage, rightPage] = [curr - 2, curr - 1, curr];
+  if (curr > 1 && curr < total) [leftPage, centerPage, rightPage] = [curr - 1, curr, curr + 1];
+  else if (curr === total) [leftPage, centerPage, rightPage] = [curr - 2, curr - 1, curr];
 
   return (
     <Container className={className}>

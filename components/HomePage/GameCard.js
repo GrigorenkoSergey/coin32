@@ -19,7 +19,7 @@ export default function GameCard({ name, poster, rating, released, slug }) {
       <RowTitle>Rating:</RowTitle>
       <RowValue>{ rating }</RowValue>
       <RowTitle>Released:</RowTitle>
-      <RowValue>{ released }</RowValue>
+      <RowValue>{ released || 'No data' }</RowValue>
     </Container>
   );
 }

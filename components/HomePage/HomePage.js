@@ -12,6 +12,7 @@ const key = process.env.NEXT_PUBLIC_API_KEY;
 const PAGE_SIZE = 24;
 
 const orderList = [
+  { id: '', text: 'No ordering' },
   { id: '-rating', text: 'Rating: best first' },
   { id: 'rating', text: 'Rating: worst first' },
   { id: '-released', text: 'Release: new first' },
@@ -23,9 +24,9 @@ const fetcher = async ({ page, ordering, platform, search } = {}) => {
     page_size: PAGE_SIZE,
     page: page,
     key,
-    ordering,
   });
 
+  if (ordering) searchStr.append('ordering', ordering);
   if (platform) searchStr.append('platforms', platform);
   if (search) searchStr.append('search', search);
 
@@ -44,10 +45,12 @@ const fetcher = async ({ page, ordering, platform, search } = {}) => {
 export default function HomePage({ platforms: platformsOrigin }) {
   const platforms = [{ id: 0, text: 'all' }, ...platformsOrigin];
 
-  const [page, setPage] = useState(1);
-  const [platform, setPlatform] = useState(platforms[0]);
-  const [order, setOrder] = useState(orderList[0]);
-  const [search, setSearch] = useState('');
+  const [{ page, platform, order, search }, setState] = useState({
+    page: 1,
+    platform: platforms[0],
+    order: orderList[0],
+    search: '',
+  });
 
   const { data, error } = useSWR({
     page,
@@ -66,16 +69,18 @@ export default function HomePage({ platforms: platformsOrigin }) {
                   platform={platform}
                   order={order}
                   orderList={orderList}
-                  onSearchEnter={setSearch}
-                  onSelectPlatform={setPlatform}
-                  onSelectOrder={setOrder} />
+                  onSearchEnter={s => setState(state => ({ ...state, search: s, page: 1 }))}
+                  onSelectPlatform={p => setState(state => ({ ...state, platform: p, page: 1 }))}
+                  onSelectOrder={o => setState(state => ({ ...state, order: o, page: 1 }))} />
 
       <CardsWrapper>
         { !games && <h2>Loading...</h2> }
         { games && games.map(g => <GameCard key={g.slug} {...g} />) }
       </CardsWrapper>
 
-      <PaginationStyled onSelect={setPage} curr={page} total={totalPages} />
+      <PaginationStyled onSelect={p => setState(state => ({ ...state, page: p }))}
+                        curr={page}
+                        total={totalPages} />
     </Layout>
   );
 }

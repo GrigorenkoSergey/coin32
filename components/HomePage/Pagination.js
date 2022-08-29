@@ -38,11 +38,6 @@ export default function Pagination({ className, curr, total, onSelect }) {
                 onClick={() => onSelect(rightPage + 1)}>
         { '>' }
       </Switcher>
-
-      <Switcher disabled={rightPage + 2 > total}
-                onClick={() => onSelect(total)}>
-        { '>>' }
-      </Switcher>
     </Container>
   );
 }
@@ -51,6 +46,10 @@ const Container = styled.div`
 display: flex;
 margin: 0 auto;
 justify-content: center;
+
+& > :first-child {
+  margin-right: 24px;
+}
 `;
 
 const Switcher = styled.button.attrs(p => ({ type: 'button' }))`

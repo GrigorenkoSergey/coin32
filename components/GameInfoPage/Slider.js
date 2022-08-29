@@ -29,31 +29,31 @@ export default function Slider({ className, slug }) {
     <Container className={className}>
       { !data && <h2>Loading...</h2> }
 
-      { data && data.results.map((img, i) => (
-        i !== imageNum
-          ? null
-          : (
-            <ImageWrapper key={img.id}>
-              { imageNum > 0 && (
-                <Arrow dir="left" onClick={() => setImageNum(imageNum - 1)}>
-                  <ArrowSvg width={25} height={25} />
-                </Arrow>
-              ) }
+      { data && (
+        <ImageWrapper>
+          { imageNum > 0 && (
+            <Arrow dir="left" onClick={() => setImageNum(imageNum - 1)}>
+              <ArrowSvg width={25} height={25} />
+            </Arrow>
+          ) }
 
-              <Image src={img.image || fallbackImg}
-                     layout="fill"
-                     alt="screenshot"
-                     placeholder="blur"
-                     blurDataURL={img.image || fallbackImg} />
+          { data && data.results.map((img, i) => (
+            <Image key={i}
+                   src={img.image || fallbackImg}
+                   style={{ zIndex: i === imageNum ? '1' : '-1' }}
+                   layout="fill"
+                   alt="screenshot"
+                   placeholder="blur"
+                   blurDataURL={img.image || fallbackImg} />
+          )) }
 
-              { imageNum < count - 1 && (
-                <Arrow dir="right" onClick={() => setImageNum(imageNum + 1)}>
-                  <ArrowSvg width={25} height={25} />
-                </Arrow>
-              ) }
-            </ImageWrapper>
-          )
-      )) }
+          { imageNum < count - 1 && (
+            <Arrow dir="right" onClick={() => setImageNum(imageNum + 1)}>
+              <ArrowSvg width={25} height={25} />
+            </Arrow>
+          ) }
+        </ImageWrapper>
+      ) }
 
       { data && <Text> { `${imageNum + 1} of ${count}` }</Text> }
     </Container>

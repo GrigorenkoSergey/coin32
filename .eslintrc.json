@@ -44,7 +44,15 @@
     ],
     "eol-last": "error",
     "eqeqeq": "error",
-    "indent": ["error", 2, {"ignoredNodes": ["JSXAttribute"]}],
+    "indent": [
+      "error",
+      2,
+      {
+        "ignoredNodes": [
+          "JSXAttribute"
+        ]
+      }
+    ],
     "import/order": "error",
     "import/no-extraneous-dependencies": "error",
     "import/prefer-default-export": "off",

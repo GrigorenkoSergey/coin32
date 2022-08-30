@@ -1,6 +1,7 @@
 import { useEffect, useRef } from 'react';
 
 // saves state in local storage
+// works in non-strict React mode
 
 // for example, this function is outside component that uses the hook.
 // const clearStorage = () => localStorage.removeItem('homePage');

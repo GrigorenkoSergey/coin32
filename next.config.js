@@ -1,7 +1,7 @@
 /** @type {import('next').NextConfig} */
 
 const nextConfig = {
-  // idiotic behavior with hook useEffect in strict mode:
+  // very strange behavior with hook useEffect in strict mode:
   // it works twice and runs unmount function when mounted for the first time
   reactStrictMode: false,
   swcMinify: true,

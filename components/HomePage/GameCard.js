@@ -2,17 +2,17 @@ import styled from 'styled-components';
 import Image from 'next/image';
 import Link from 'next/link';
 
-const noImageSrc = '/no-image.jpg';
+const fallbackImg = '/no-image.jpg';
 export default function GameCard({ name, poster, rating, released, slug }) {
   return (
     <Container>
       <Link href={`/game/${slug}`}>
         <ImageWrapper>
-          <Image src={poster || noImageSrc}
+          <Image src={poster || fallbackImg}
                  alt="poster"
                  layout="fill"
                  placeholder="blur"
-                 blurDataURL={poster || noImageSrc} />
+                 blurDataURL={poster || fallbackImg} />
         </ImageWrapper>
       </Link>
       <GameName>{ name }</GameName>

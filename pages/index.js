@@ -1,4 +1,5 @@
 import HomePage from '@/components/HomePage';
+export default HomePage;
 
 const apiSrc = process.env.NEXT_PUBLIC_API_URL;
 const key = process.env.NEXT_PUBLIC_API_KEY;
@@ -10,6 +11,3 @@ export const getStaticProps = async () => {
 
   return { props: { platforms } };
 };
-
-const Home = HomePage;
-export default Home;

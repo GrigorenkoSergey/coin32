@@ -13,7 +13,6 @@ export default function Layout({ title, children }) {
 }
 
 const Container = styled.section`
-max-width: 1280px;
 min-height: 100vh;
 display: flex;
 flex-direction: column;
@@ -25,6 +24,6 @@ background-color: ${p => p.theme.bgColor};
 color: ${p => p.theme.fontColor};
 
 @media ${p => p.theme.media.tablet} {
-  max-width: 100%;
+  max-width: 1440px;
 }
 `;

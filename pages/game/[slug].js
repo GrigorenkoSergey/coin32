@@ -1,4 +1,5 @@
 import GameInfoPage from '@/components/GameInfoPage';
+export default GameInfoPage;
 
 const apiSrc = process.env.NEXT_PUBLIC_API_URL;
 const key = process.env.NEXT_PUBLIC_API_KEY;
@@ -10,5 +11,3 @@ export async function getServerSideProps(context) {
 
   return { props: { slug, info: data, }, };
 }
-
-export default GameInfoPage;

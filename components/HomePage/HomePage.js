@@ -6,10 +6,11 @@ import Layout from '../Layout';
 import GameCard from './GameCard';
 import SortingBar from './SortingBar';
 import Pagination from './Pagination';
+import { usePersist } from '@/utils';
 
 const apiSrc = process.env.NEXT_PUBLIC_API_URL;
 const key = process.env.NEXT_PUBLIC_API_KEY;
-const PAGE_SIZE = 24;
+const PAGE_SIZE = 12;
 
 const orderList = [
   { id: '', text: 'No ordering' },
@@ -42,15 +43,20 @@ const fetcher = async ({ page, ordering, platform, search } = {}) => {
   return { games, totalPages };
 };
 
+const clearStorage = () => localStorage.removeItem('homePage');
+
 export default function HomePage({ platforms: platformsOrigin }) {
   const platforms = [{ id: 0, text: 'all' }, ...platformsOrigin];
 
-  const [{ page, platform, order, search }, setState] = useState({
+  const [state, setState] = useState({
     page: 1,
     platform: platforms[0],
     order: orderList[0],
     search: '',
   });
+
+  const { page, platform, order, search } = state;
+  usePersist({ key: 'homePage', state, setState, clearStorage, saveAlways: true });
 
   const { data, error } = useSWR({
     page,
@@ -60,7 +66,6 @@ export default function HomePage({ platforms: platformsOrigin }) {
   }, fetcher);
 
   if (error) return <h2>Failed to load games...</h2>;
-
   const { games, totalPages } = data || {};
 
   return (

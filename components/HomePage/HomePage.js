@@ -28,25 +28,33 @@ export default function HomePage({ games, totalPages }) {
   const { data } = useSWR('/api', fetcher);
   const ctx = useContext(HomeCtx);
 
-  const { page = 1, platform, ordering, search = '' } = router.query;
+  const { page = 1, platform = '', ordering = '', search = '' } = router.query;
   ctx.current = router.query;
 
   const { platforms: platformsOrigin = [] } = data || {};
   const platforms = [{ id: 0, text: 'all' }, ...platformsOrigin];
 
-  const platformItem = platform ? platforms.find(el => el.id === platform) : platforms[0];
+  const platformItem = platform ? platforms.find(el => el.id === Number(platform)) : platforms[0];
   const orderItem = ordering ? orderList.find(el => el.id === ordering) : orderList[0];
 
   const handleSearchEnter = search => {
-    router.push({ query: { search, page: 1 } });
+    router.push({ query: { ...router.query, search, page: 1 } });
   };
 
   const handleSelectPlatform = platform => {
-    router.push({ query: { platform: platform.id, page: 1 } });
+    if (platform.id === 0) {
+      delete router.query.platform;
+      return router.push({ query: { ...router.query, page: 1 } });
+    }
+    router.push({ query: { ...router.query, platform: platform.id, page: 1 } });
   };
 
   const handleSelectOrder = order => {
-    router.push({ query: { ordering: order.id, page: 1 } });
+    if (order.id === '') {
+      delete router.query.ordering;
+      return router.push({ query: { ...router.query, page: 1 } });
+    }
+    router.push({ query: { ...router.query, ordering: order.id, page: 1 } });
   };
 
   return (

@@ -4,13 +4,10 @@ import useSWR from 'swr';
 import Image from 'next/image';
 import ArrowSvg from '@/icons/arrow.svg';
 
-const apiSrc = process.env.NEXT_PUBLIC_API_URL;
-const key = process.env.NEXT_PUBLIC_API_KEY;
+const apiSrc = '/api';
 
 const fetcher = async ({ slug }) => {
-  const searchStr = new URLSearchParams({ key });
-  const query = `${apiSrc}/games/${slug}/screenshots?${searchStr}`;
-
+  const query = `${apiSrc}/games/${slug}/screenshots?`;
   const res = await fetch(query);
   const data = await res.json();
   return data;

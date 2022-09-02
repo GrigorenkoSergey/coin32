@@ -9,16 +9,25 @@ export default function SortingBar({
   orderList,
   order,
   onSelectOrder,
+  searchValue,
   onSearchEnter
 }) {
   return (
     <Container>
       <GameSpan>Game:</GameSpan>
-      <SearchStyled onEnter={onSearchEnter} />
+      <SearchStyled onEnter={onSearchEnter} startValue={searchValue} />
       <span>Platform:</span>
-      <Dropdown list={platformList} zIndex={10} selectedItem={platform} onSelect={onSelectPlatform} />
+      <Dropdown list={platformList}
+                defaultSelected={platform}
+                onSelect={onSelectPlatform}
+                zIndex={10} />
+
       <OrderSpan>Order&nbsp;by:</OrderSpan>
-      <Dropdown list={orderList} zIndex={5} selectedItem={order} onSelect={onSelectOrder} />
+
+      <Dropdown list={orderList}
+                defaultSelected={order}
+                onSelect={onSelectOrder}
+                zIndex={5} />
     </Container>
   );
 }

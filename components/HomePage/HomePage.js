@@ -1,16 +1,13 @@
 import styled from 'styled-components';
 import useSWR from 'swr';
-import { useState } from 'react';
+import { useContext } from 'react';
+import { useRouter } from 'next/router';
 
 import Layout from '../Layout';
+import { HomeCtx } from './context';
 import GameCard from './GameCard';
 import SortingBar from './SortingBar';
 import Pagination from './Pagination';
-import { usePersist } from '@/utils';
-
-const apiSrc = process.env.NEXT_PUBLIC_API_URL;
-const key = process.env.NEXT_PUBLIC_API_KEY;
-const PAGE_SIZE = 12;
 
 const orderList = [
   { id: '', text: 'No ordering' },
@@ -20,71 +17,54 @@ const orderList = [
   { id: 'released', text: 'Release: old first' },
 ];
 
-const fetcher = async ({ page, ordering, platform, search } = {}) => {
-  const searchStr = new URLSearchParams({
-    page_size: PAGE_SIZE,
-    page: page,
-    key,
-  });
-
-  if (ordering) searchStr.append('ordering', ordering);
-  if (platform) searchStr.append('platforms', platform);
-  if (search) searchStr.append('search', search);
-
-  const res = await fetch(`${apiSrc}/games?${searchStr}`);
+const fetcher = async apiSrc => {
+  const res = await fetch(`${apiSrc}/platforms`);
   const data = await res.json();
-
-  const totalPages = Math.ceil(data.count / PAGE_SIZE);
-  const games = data.results.map(g => {
-    const { slug, name, background_image: poster, rating, released } = g;
-    return { slug, name, poster, rating, released };
-  });
-
-  return { games, totalPages };
+  return { platforms: data };
 };
 
-const clearStorage = () => localStorage.removeItem('homePage');
+export default function HomePage({ games, totalPages }) {
+  const router = useRouter();
+  const { data } = useSWR('/api', fetcher);
+  const ctx = useContext(HomeCtx);
 
-export default function HomePage({ platforms: platformsOrigin }) {
+  const { page = 1, platform, ordering, search = '' } = router.query;
+  ctx.current = router.query;
+
+  const { platforms: platformsOrigin = [] } = data || {};
   const platforms = [{ id: 0, text: 'all' }, ...platformsOrigin];
 
-  const [state, setState] = useState({
-    page: 1,
-    platform: platforms[0],
-    order: orderList[0],
-    search: '',
-  });
+  const platformItem = platform ? platforms.find(el => el.id === platform) : platforms[0];
+  const orderItem = ordering ? orderList.find(el => el.id === ordering) : orderList[0];
 
-  const { page, platform, order, search } = state;
-  usePersist({ key: 'homePage', state, setState, clearStorage, saveAlways: true });
+  const handleSearchEnter = search => {
+    router.push({ query: { search, page: 1 } });
+  };
 
-  const { data, error } = useSWR({
-    page,
-    platform: platform.id,
-    ordering: order.id,
-    search
-  }, fetcher);
+  const handleSelectPlatform = platform => {
+    router.push({ query: { platform: platform.id, page: 1 } });
+  };
 
-  if (error) return <h2>Failed to load games...</h2>;
-  const { games, totalPages } = data || {};
+  const handleSelectOrder = order => {
+    router.push({ query: { ordering: order.id, page: 1 } });
+  };
 
   return (
     <Layout title="Select your Game!">
       <SortingBar platformList={platforms}
-                  platform={platform}
-                  order={order}
+                  platform={platformItem}
+                  order={orderItem}
                   orderList={orderList}
-                  onSearchEnter={s => setState(state => ({ ...state, search: s, page: 1 }))}
-                  onSelectPlatform={p => setState(state => ({ ...state, platform: p, page: 1 }))}
-                  onSelectOrder={o => setState(state => ({ ...state, order: o, page: 1 }))} />
+                  searchValue={search}
+                  onSearchEnter={handleSearchEnter}
+                  onSelectPlatform={handleSelectPlatform}
+                  onSelectOrder={handleSelectOrder} />
 
       <CardsWrapper>
-        { !games && <h2>Loading...</h2> }
-        { games && games.map(g => <GameCard key={g.slug} {...g} />) }
+        { games.map(g => <GameCard key={g.slug} {...g} />) }
       </CardsWrapper>
 
-      <PaginationStyled onSelect={p => setState(state => ({ ...state, page: p }))}
-                        curr={page}
+      <PaginationStyled curr={Number(page)}
                         total={totalPages} />
     </Layout>
   );

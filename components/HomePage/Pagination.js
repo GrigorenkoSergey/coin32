@@ -1,6 +1,14 @@
 import styled from 'styled-components';
+import { useRouter } from 'next/router';
+import Link from 'next/link';
 
-export default function Pagination({ className, curr, total, onSelect }) {
+export default function Pagination({ className, curr = 1, total }) {
+  const router = useRouter();
+  const pagePath = num => ({
+    pathname: router.pathname,
+    query: { ...router.query, page: num },
+  });
+
   let [leftPage, centerPage, rightPage] = [1, 2, 3];
   if (curr > 1 && curr < total) [leftPage, centerPage, rightPage] = [curr - 1, curr, curr + 1];
   else if (curr === total) [leftPage, centerPage, rightPage] = [curr - 2, curr - 1, curr];
@@ -8,39 +16,53 @@ export default function Pagination({ className, curr, total, onSelect }) {
   return (
     <Container className={className}>
       <Switcher disabled={leftPage < 3}
-                onClick={() => onSelect(1)}>
+                href={pagePath(1)}>
         { '<<' }
       </Switcher>
 
       <Switcher disabled={leftPage < 2}
-                onClick={() => onSelect(leftPage - 1)}>
+                href={pagePath(leftPage - 1)}>
         { '<' }
       </Switcher>
 
-      <Switcher onClick={() => onSelect(leftPage)}
+      <Switcher href={pagePath(leftPage)}
                 isCurrent={leftPage === curr}>
         { leftPage }
       </Switcher>
 
-      <Switcher onClick={() => onSelect(centerPage)}
+      <Switcher href={pagePath(centerPage)}
                 disabled={centerPage > total}
                 isCurrent={centerPage === curr}>
         { centerPage }
       </Switcher>
 
-      <Switcher onClick={() => onSelect(rightPage)}
-                disabled={rightPage > total}
+      <Switcher disabled={rightPage > total}
+                href={pagePath(rightPage)}
                 isCurrent={rightPage === curr}>
         { rightPage }
       </Switcher>
 
       <Switcher disabled={rightPage + 1 > total}
-                onClick={() => onSelect(rightPage + 1)}>
+                href={pagePath(rightPage + 1)}>
         { '>' }
       </Switcher>
     </Container>
   );
 }
+
+const Switcher = ({ disabled, href, isCurrent, children }) => {
+  return (
+    <>
+      { disabled
+        ? <StyledLink as="span" data-disabled> { children } </StyledLink>
+        : (
+          <Link href={href} passHref scroll={false}>
+            <StyledLink isCurrent={isCurrent}> { children } </StyledLink>
+          </Link>
+        ) }
+    </>
+  );
+};
 
 const Container = styled.div`
 display: flex;
@@ -52,20 +74,19 @@ justify-content: center;
 }
 `;
 
-const Switcher = styled.button.attrs(p => ({ type: 'button' }))`
-all: unset;
+const StyledLink = styled.a`
 padding: 5px;
 min-width: 30px;
 text-align: center;
 
 background: ${p => p.isCurrent ? 'fixed' : 'gray'};
 
-&:hover:not(:disabled) {
+&:hover:not([data-disabled]) {
   background: darkgray;
   cursor: pointer;
 }
 
-&:disabled {
+&[data-disabled] {
   opacity: 0.5;
 }
 `;

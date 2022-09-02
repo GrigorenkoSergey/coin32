@@ -2,8 +2,8 @@ import { useEffect, useState, useRef } from 'react';
 import styled from 'styled-components';
 import SearchSvg from '@/icons/search.svg';
 
-export default function Search({ className, onEnter }) {
-  const [value, setValue] = useState('');
+export default function Search({ className, onEnter, startValue = '' }) {
+  const [value, setValue] = useState(startValue);
   const ref = useRef();
 
   useEffect(() => {

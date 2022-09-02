@@ -1,11 +1,19 @@
+import { useContext } from 'react';
 import styled from 'styled-components';
 import Link from 'next/link';
+import { HomeCtx } from './HomePage';
 import HomeSvg from '@/icons/home.svg';
 
 export default function Header({ title }) {
+  const homeCtx = useContext(HomeCtx);
+  const homeLinkHref = {
+    pathname: '/',
+    query: homeCtx.current,
+  };
+
   return (
     <Container>
-      <Link href="/">
+      <Link href={homeLinkHref}>
         <HomeLink>
           <HomeSvg width={30} height={30} />
         </HomeLink>

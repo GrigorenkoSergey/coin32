@@ -1,10 +1,12 @@
 import styled from 'styled-components';
+import Head from 'next/head';
 import Header from './Header';
 import Footer from './Footer';
 
 export default function Layout({ title, children }) {
   return (
     <Container>
+      <Head><title>Game App</title></Head>
       <Header title={title} />
       { children }
       <Footer />

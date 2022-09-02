@@ -1,4 +1,6 @@
 import { createGlobalStyle, ThemeProvider } from 'styled-components';
+import { useRef } from 'react';
+import { HomeCtx } from 'components/HomePage';
 
 const theme = {
   bgColor: '#151515',
@@ -50,10 +52,13 @@ a {
 `;
 
 export default function MyApp({ Component, pageProps }) {
+  const homeCtxRef = useRef();
   return (
     <ThemeProvider theme={theme}>
       <Global />
-      <Component {...pageProps} />
+      <HomeCtx.Provider value={homeCtxRef}>
+        <Component {...pageProps} />
+      </HomeCtx.Provider>
     </ThemeProvider>
   );
 }

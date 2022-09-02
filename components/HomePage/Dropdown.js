@@ -3,13 +3,16 @@ import styled from 'styled-components';
 import ArrowSvg from '@/icons/arrow.svg';
 import { useOnClickOutside } from '@/utils';
 
-export default function Dropdown({ list = [], onSelect, selectedItem, placeholder = '', zIndex }) {
+export default function Dropdown({ list = [], onSelect, defaultSelected, placeholder = '', zIndex }) {
   const ref = useRef(null);
   const [isExpanded, setIsExpanded] = useState(false);
+  const [selected, setSelected] = useState(defaultSelected);
+
   useOnClickOutside(ref, () => setIsExpanded(false));
 
   const handleSelect = item => {
     setIsExpanded(false);
+    setSelected(item);
     onSelect?.(item);
   };
 
@@ -18,7 +21,7 @@ export default function Dropdown({ list = [], onSelect, selectedItem, placeholde
       <Header isExpanded={isExpanded}
               onClick={() => setIsExpanded(!isExpanded)}>
         <Value isExpanded={isExpanded}>
-          { selectedItem ? selectedItem.text : placeholder }
+          { selected ? selected.text : placeholder }
         </Value>
 
         <Arrow isExpanded={isExpanded}>

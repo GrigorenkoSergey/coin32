@@ -2,6 +2,7 @@ import styled from 'styled-components';
 import Head from 'next/head';
 import Header from './Header';
 import Footer from './Footer';
+import Loader from './Loader';
 
 export default function Layout({ title, children }) {
   return (
@@ -10,6 +11,7 @@ export default function Layout({ title, children }) {
       <Header title={title} />
       { children }
       <Footer />
+      <Loader />
     </Container>
   );
 }

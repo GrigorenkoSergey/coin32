@@ -12,6 +12,11 @@ export default function GameCard({ name, poster, rating, released, slug }) {
                  alt="poster"
                  layout="fill"
                  placeholder="blur"
+                 sizes="(min-width: 1440px) 360px,
+                        (min-width: 1025px) 25vw,
+                        (min-width: 769px) 33vw,
+                        (min-width: 481px) 50vw,
+                        100vw"
                  blurDataURL={poster || fallbackImg} />
         </ImageWrapper>
       </Link>

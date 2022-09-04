@@ -41,6 +41,8 @@ export default function Slider({ className, slug }) {
                    layout="fill"
                    alt="screenshot"
                    placeholder="blur"
+                   sizes="(min-width: 1440px) 1440px,
+                          100vw"
                    blurDataURL={img.image || fallbackImg} />
           )) }
 

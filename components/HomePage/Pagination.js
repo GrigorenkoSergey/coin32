@@ -15,7 +15,7 @@ export default function Pagination({ className, curr = 1, total }) {
 
   return (
     <Container className={className}>
-      <Switcher disabled={leftPage < 3}
+      <Switcher disabled={curr === 1}
                 href={pagePath(1)}>
         { '<<' }
       </Switcher>

@@ -5,6 +5,7 @@ const nextConfig = {
   // it works twice and runs unmount function when mounted for the first time
   reactStrictMode: false,
   swcMinify: true,
+  compiler: { styledComponents: true, },
 
   webpack(config) {
     config.module.rules.push({

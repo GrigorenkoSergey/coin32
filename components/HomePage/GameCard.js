@@ -6,7 +6,7 @@ const fallbackImg = '/no-image.jpg';
 export default function GameCard({ name, poster, rating, released, slug }) {
   return (
     <Container>
-      <Link href={`/game/${slug}`}>
+      <Link href={`/game/${slug}`} passHref>
         <ImageWrapper>
           <Image src={poster || fallbackImg}
                  alt="poster"
@@ -40,7 +40,7 @@ align-items: center;
 grid-row-gap: 4px;
 `;
 
-const ImageWrapper = styled.div`
+const ImageWrapper = styled.a`
 cursor: pointer;
 position: relative;
 min-height: 150px;

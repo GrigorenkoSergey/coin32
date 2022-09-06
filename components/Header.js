@@ -13,7 +13,7 @@ export default function Header({ title }) {
 
   return (
     <Container>
-      <Link href={homeLinkHref}>
+      <Link href={homeLinkHref} passHref>
         <HomeLink>
           <HomeSvg width={30} height={30} />
         </HomeLink>
